@@ -7,8 +7,6 @@ var len_arr = Math.floor(width / thick);
 var sorted_arr = Array(0);
 var start_sorting = false;
 var frame_rate_val = 40;
-var timer_arr = [];
-var time_taken = 0;
 var pause = false;
 //each bar has following properties
 class Element {
@@ -50,13 +48,6 @@ const algo_dict = {
     mergeSort: mergeSort,
     quickSort: quickSortLomuto,
 };
-const timer_algo = {
-    bubbleSort: bubbleSort_t,
-    selectionSort: selectionSort_t,
-    mergeSort: mergeSort_t,
-    quickSort: quickSortLomuto_t,
-};
-
 
 function setup() {
     createCanvas(width, height);
@@ -93,7 +84,6 @@ function setup() {
                         setup_arr();
                         document.getElementById("time").innerHTML = "Time:0us";
                         start_sorting = true;
-                        time_this_algo(this.id);
                         start_sort(this.id);
                     }
                 }
@@ -105,29 +95,6 @@ function setup() {
     slider_control(); //slide control
     setup_arr(); //create the arr
     // console.log(frameRate());
-}
-function time_this_algo(algo) {
-    //timer start
-    var t0 = window.performance.now();
-    timer_loop = timer_algo[algo](timer_arr);
-    var t1 = window.performance.now();
-    console.log(t1 - t0);
-    time = (t1 - t0) * 1000;
-    time = Math.round(time);
-    t1 = 0;
-    t0 = 0;
-    if (time == 0) {
-        time = 0.01;
-    }
-    if (time < 1000) {
-        document.getElementById("time").innerHTML =
-            "Time: " + String(time) + "us";
-    } else {
-        document.getElementById("time").innerHTML =
-            "Time: " + String(Math.round(time / 1000)) + "ms";
-    }
-    //timer stop
-    //store the diff
 }
 function slider_control() {
     var size_slider = document.getElementById("data_size");
